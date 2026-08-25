@@ -96,9 +96,6 @@ body {
 
 .wave-top      { left: -1%;    top: 1.43%;  width: 100.9%; aspect-ratio: 394 / 80; }
 .heart-on-wave { left: 52.9%;  top: 4.89%;  width: 8.95%;  aspect-ratio: 35 / 32; }
-/* База ниже макетной: сердечко всплывает и гаснет у исходной точки,
-   не выходя за верхний край карточки. Позиции даны по центру прежних. */
-.heart-top     { left: 42.9%;  top: 8.05%;  width: 10%; }
 
 /* ---------- Детские фото ---------- */
 
@@ -109,6 +106,20 @@ body {
 }
 .quote-left  { left: 11.5%; top: 8.98%;  width: 47%; }
 .quote-right { left: 57.8%; top: 11.28%; width: 37%; }
+
+/* «Думающие» смайлики после первой реплики */
+.think-emoji {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  animation: think-rise 1.9s ease-out forwards;
+}
+@keyframes think-rise {
+  0%   { transform: translateY(0) rotate(-8deg) scale(0.6); opacity: 0; }
+  15%  { opacity: 1; transform: translateY(-1.5cqw) rotate(-4deg) scale(1); }
+  55%  { transform: translateY(-7cqw) rotate(6deg); }
+  100% { transform: translateY(-14cqw) rotate(-4deg); opacity: 0; }
+}
 
 /* Курсор «печатной машинки» (Typed.js) */
 .typed-cursor {
@@ -293,7 +304,6 @@ body {
 .heart-mid    { left: 86.8%;  top: 49.66%; width: 9.5%; rotate: 10deg; animation-delay: 0.5s; }
 .heart-corner { left: 8.3%;   top: 96.51%; width: 9.5%; animation-delay: 1.4s; }
 
-.heart-top,
 .heart-left {
   animation: heart-rise 13s ease-in-out infinite;
   transform-origin: 50% 60%;
@@ -303,7 +313,6 @@ body {
    с разной точки пути, полёт не синхронный и виден сразу.
    Свойство rotate задаёт базовый наклон и складывается с transform. */
 .heart-invite { animation-delay: 0.9s; }
-.heart-top    { animation-duration: 13s; animation-delay: -2s; }
 .heart-left   { animation-duration: 16s; animation-delay: -7s; rotate: -10deg; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -311,7 +320,6 @@ body {
   .heart-invite,
   .heart-mid,
   .heart-corner,
-  .heart-top,
   .heart-left {
     animation: none;
   }

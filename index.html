@@ -18,7 +18,6 @@
     <!-- Верхняя волна с сердечками -->
     <img class="deco wave-top" src="assets/wave-top.svg" alt="">
     <img class="deco heart-on-wave" src="assets/heart.svg" alt="">
-    <img class="deco heart-top" src="assets/heart-r.svg" alt="">
 
     <!-- Детские фото с репликами -->
     <section class="childhood">
@@ -86,14 +85,35 @@
           cursorChar: '|',
           onComplete: function (self) {
             if (self.cursor) self.cursor.remove();
-            if (next) setTimeout(next, 1300);
+            if (next) next();
           }
         });
       }
 
+      // «думающие» смайлики всплывают возле второй реплики,
+      // пока девочка готовит ответ
+      function thinkBubbles() {
+        var card = document.querySelector('.card');
+        for (var i = 0; i < 4; i++) {
+          setTimeout(function () {
+            var s = document.createElement('span');
+            s.className = 'think-emoji';
+            s.textContent = '🤔';
+            s.style.left = (58 + Math.random() * 20) + '%';
+            s.style.top = (12.5 + Math.random() * 2) + '%';
+            s.style.fontSize = (4.5 + Math.random() * 2.5) + 'cqw';
+            card.appendChild(s);
+            setTimeout(function () { s.remove(); }, 2100);
+          }, i * 400);
+        }
+      }
+
       var startTyping = function () {
         setTimeout(function () {
-          type(spans[0], t1, function () { type(spans[1], t2, null); });
+          type(spans[0], t1, function () {
+            thinkBubbles();
+            setTimeout(function () { type(spans[1], t2, null); }, 1700);
+          });
         }, 500);
       };
       if (document.readyState === 'complete') startTyping();
