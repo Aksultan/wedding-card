@@ -66,5 +66,32 @@
 
   </main>
 
+  <script src="assets/confetti.min.js"></script>
+  <script>
+    (function () {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !window.confetti) return;
+      var colors = ['#E03059', '#CB4363', '#DA2D55', '#F0A8B8', '#E8C36A'];
+
+      // праздничный залп при открытии
+      confetti({ particleCount: 90, spread: 75, origin: { y: 0.3 }, colors: colors });
+      setTimeout(function () {
+        confetti({ particleCount: 45, angle: 60, spread: 55, origin: { x: 0, y: 0.45 }, colors: colors });
+        confetti({ particleCount: 45, angle: 120, spread: 55, origin: { x: 1, y: 0.45 }, colors: colors });
+      }, 400);
+
+      // лёгкие повторные всплески
+      setInterval(function () {
+        confetti({
+          particleCount: 24,
+          spread: 65,
+          scalar: 0.9,
+          ticks: 220,
+          origin: { x: 0.2 + Math.random() * 0.6, y: 0.25 },
+          colors: colors
+        });
+      }, 8000);
+    })();
+  </script>
+
 </body>
 </html>
