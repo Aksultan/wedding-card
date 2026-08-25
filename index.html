@@ -112,7 +112,12 @@
         setTimeout(function () {
           type(spans[0], t1, function () {
             thinkBubbles();
-            setTimeout(function () { type(spans[1], t2, null); }, 1700);
+            setTimeout(function () {
+              // после её ответа — конфетти
+              type(spans[1], t2, function () {
+                if (window.startCelebration) setTimeout(window.startCelebration, 400);
+              });
+            }, 1700);
           });
         }, 500);
       };
@@ -125,9 +130,13 @@
     (function () {
       if (matchMedia('(prefers-reduced-motion: reduce)').matches || !window.confetti) return;
       var colors = ['#E03059', '#CB4363', '#DA2D55', '#F0A8B8', '#E8C36A'];
+      var fired = false;
 
-      function start() {
-        // праздничный залп — после полной загрузки, чтобы не дёргать отрисовку
+      // запускается после её ответа в диалоге
+      window.startCelebration = function () {
+        if (fired) return;
+        fired = true;
+
         confetti({ particleCount: 90, spread: 75, origin: { y: 0.3 }, colors: colors });
         setTimeout(function () {
           confetti({ particleCount: 45, angle: 60, spread: 55, origin: { x: 0, y: 0.45 }, colors: colors });
@@ -145,10 +154,12 @@
             colors: colors
           });
         }, 8000);
-      }
+      };
 
-      if (document.readyState === 'complete') setTimeout(start, 300);
-      else addEventListener('load', function () { setTimeout(start, 300); });
+      // запасной запуск, если диалог не анимируется (нет Typed.js)
+      if (!window.Typed) {
+        addEventListener('load', function () { setTimeout(window.startCelebration, 800); });
+      }
     })();
   </script>
 
