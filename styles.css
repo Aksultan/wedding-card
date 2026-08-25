@@ -110,6 +110,17 @@ body {
 .quote-left  { left: 11.5%; top: 8.98%;  width: 47%; }
 .quote-right { left: 57.8%; top: 11.28%; width: 37%; }
 
+/* Курсор «печатной машинки» (Typed.js) */
+.typed-cursor {
+  color: var(--pink-date);
+  font-weight: 400;
+  animation: cursor-blink 0.8s step-end infinite;
+}
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
 .kids-photo {
   left: 16.1%;
   top: 11.71%;

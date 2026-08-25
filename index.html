@@ -22,8 +22,8 @@
 
     <!-- Детские фото с репликами -->
     <section class="childhood">
-      <p class="quote quote-left">- Есейгенде әйелім кім болады екен?</p>
-      <p class="quote quote-right">- Ол — мен боламын!</p>
+      <p class="quote quote-left"><span class="q-type">- Есейгенде әйелім кім болады екен?</span></p>
+      <p class="quote quote-right"><span class="q-type">- Ол — мен боламын!</span></p>
       <img class="kids-photo" src="assets/kids.jpg" alt="Ақсұлтан мен Наирим балалық шақта">
     </section>
 
@@ -67,6 +67,39 @@
 
   </main>
 
+  <script src="assets/typed.min.js"></script>
+  <script>
+    // Диалог сверху печатается по очереди, как живой разговор
+    (function () {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !window.Typed) return;
+      var spans = document.querySelectorAll('.q-type');
+      if (spans.length < 2) return;
+      var t1 = spans[0].textContent, t2 = spans[1].textContent;
+      spans[0].textContent = '';
+      spans[1].textContent = '';
+
+      function type(el, text, next) {
+        new Typed(el, {
+          strings: [text],
+          typeSpeed: 45,
+          showCursor: true,
+          cursorChar: '|',
+          onComplete: function (self) {
+            if (self.cursor) self.cursor.remove();
+            if (next) setTimeout(next, 350);
+          }
+        });
+      }
+
+      var startTyping = function () {
+        setTimeout(function () {
+          type(spans[0], t1, function () { type(spans[1], t2, null); });
+        }, 500);
+      };
+      if (document.readyState === 'complete') startTyping();
+      else addEventListener('load', startTyping);
+    })();
+  </script>
   <script src="assets/confetti.min.js"></script>
   <script>
     (function () {
