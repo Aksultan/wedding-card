@@ -109,7 +109,12 @@
         tryPlay();
       }
       tryPlay();
+      // максимально широкий набор жестов: на телефонах надёжнее всего
+      // touchstart/touchend, click — страховка для старых браузеров
       addEventListener('pointerdown', globalTry);
+      addEventListener('touchstart', globalTry, { passive: true });
+      addEventListener('touchend', globalTry, { passive: true });
+      addEventListener('click', globalTry);
       addEventListener('keydown', globalTry);
     })();
   </script>
