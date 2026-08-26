@@ -116,6 +116,8 @@
       addEventListener('touchend', globalTry, { passive: true });
       addEventListener('click', globalTry);
       addEventListener('keydown', globalTry);
+      addEventListener('scroll', globalTry, { passive: true });
+      addEventListener('wheel', globalTry, { passive: true });
     })();
   </script>
 
