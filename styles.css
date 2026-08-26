@@ -325,6 +325,45 @@ body {
   }
 }
 
+/* ---------- Кнопка музыки ---------- */
+
+#music-btn {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: var(--pink-banner);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(80, 30, 45, 0.35);
+  opacity: 0.85;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+#music-btn:hover { opacity: 1; transform: scale(1.06); }
+
+#music-ico { display: inline-block; }
+
+#music-btn.playing { opacity: 1; }
+#music-btn.playing #music-ico {
+  animation: music-swing 1.2s ease-in-out infinite;
+}
+
+@keyframes music-swing {
+  0%, 100% { transform: rotate(-8deg); }
+  50%      { transform: rotate(8deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #music-btn.playing #music-ico { animation: none; }
+}
+
 /* ---------- Планшет и десктоп ---------- */
 
 @media (min-width: 480px) {

@@ -66,6 +66,47 @@
 
   </main>
 
+  <!-- Фоновая музыка: ДОС МУКАСАН — Той жыры -->
+  <audio id="bg-music" src="assets/toi-zhyry.mp3" loop preload="none"></audio>
+  <button id="music-btn" type="button" aria-label="Музыканы қосу/өшіру" title="Музыка"><span id="music-ico">♪</span></button>
+  <script>
+    (function () {
+      var audio = document.getElementById('bg-music');
+      var btn = document.getElementById('music-btn');
+      var userPaused = false;
+
+      function fadeIn() {
+        audio.volume = 0;
+        var v = 0;
+        var timer = setInterval(function () {
+          v = Math.min(0.8, v + 0.05);
+          audio.volume = v;
+          if (v >= 0.8) clearInterval(timer);
+        }, 120);
+      }
+
+      function tryPlay() {
+        if (!audio.paused || userPaused) return;
+        audio.play().then(fadeIn).catch(function () {});
+      }
+
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (audio.paused) { userPaused = false; tryPlay(); }
+        else { userPaused = true; audio.pause(); }
+      });
+
+      var ico = document.getElementById('music-ico');
+      audio.addEventListener('play', function () { btn.classList.add('playing'); ico.textContent = '♫'; });
+      audio.addEventListener('pause', function () { btn.classList.remove('playing'); ico.textContent = '♪'; });
+
+      // автозапуск браузеры блокируют — стартуем при первом касании страницы
+      tryPlay();
+      addEventListener('pointerdown', tryPlay);
+      addEventListener('keydown', tryPlay);
+    })();
+  </script>
+
   <script src="assets/typed.min.js"></script>
   <script>
     // Диалог сверху печатается по очереди, как живой разговор
