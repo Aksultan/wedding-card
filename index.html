@@ -100,10 +100,17 @@
       audio.addEventListener('play', function () { btn.classList.add('playing'); ico.textContent = '♫'; });
       audio.addEventListener('pause', function () { btn.classList.remove('playing'); ico.textContent = '♪'; });
 
-      // автозапуск браузеры блокируют — стартуем при первом касании страницы
+      // Автозапуск со звуком браузеры блокируют до первого действия
+      // пользователя — пробуем сразу, а дальше стартуем с первого касания.
+      // Касания самой кнопки глобальный обработчик пропускает, иначе
+      // pointerdown включал бы музыку, а следующий за ним click выключал.
+      function globalTry(e) {
+        if (e && e.target && e.target.closest && e.target.closest('#music-btn')) return;
+        tryPlay();
+      }
       tryPlay();
-      addEventListener('pointerdown', tryPlay);
-      addEventListener('keydown', tryPlay);
+      addEventListener('pointerdown', globalTry);
+      addEventListener('keydown', globalTry);
     })();
   </script>
 
